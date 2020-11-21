@@ -1,0 +1,69 @@
+import React from "react";
+import "./App.css";
+
+export default class Todoform extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: "",
+      value: [],
+      id: "",
+    };
+  }
+  handleChange = (event) => {
+    this.setState({ user: event.target.value });
+  };
+  handleSave = () => {
+    const { value, user } = this.state;
+    let array = value;
+    array.push(user);
+    this.setState({ value: array });
+  };
+  removeItem = (number) => {
+    const { value, user } = this.state;
+    this.setState({ value: this.state.value.filter((i) => i.number !== number) });
+  };
+  // handleDelete = (id) => {
+  //   const { value, user } = this.state;
+  //   this.setState({
+  //     value: this.state.value.splice(id, 1),
+  //   });
+  // };
+
+  render() {
+    const type = " ";
+    return (
+      <div>
+        <h1 className="Todo" style={{ color: "lightgreen" }}>
+          TODO App
+        </h1>
+        <label className="Todoinput2" htmlFor="type">
+          Please Type
+        </label>
+        <div className="Todoinput">
+          <input
+            id="type"
+            className="Todoinput"
+            name="text"
+            value={this.state.user}
+            type="text"
+            placeholder="Enter the  ........"
+            onChange={this.handleChange}
+          />
+          {type ? <strong> {type}</strong> : "Please type your name"}
+          <button className="btnclass" onClick={this.handleSave}>
+            Click
+          </button>
+          {this.state.value.map((item, index) => {
+            return (
+              <div className="textDec" key={index.id}>
+                {index} = {item}
+                <button onClick={() => this.removeItem(item)}>x</button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+}
